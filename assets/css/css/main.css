@@ -1,0 +1,56 @@
+/* line 4, ../sass/main.scss */
+body {
+  background-image: url("../img/bg1.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* line 17, ../sass/main.scss */
+#header {
+  background-color: #f70101;
+  padding: 20px 40px 0px 40px;
+}
+/* line 18, ../sass/main.scss */
+#header #title {
+  float: left;
+  color: #f4f4f4;
+}
+/* line 24, ../sass/main.scss */
+#header .nav-tabs {
+  border-bottom: 0px;
+}
+/* line 26, ../sass/main.scss */
+#header .nav-tabs li {
+  padding: 0px 10px;
+  float: right;
+}
+/* line 30, ../sass/main.scss */
+#header .nav-tabs li:hover a, #header .nav-tabs li:active a {
+  color: #f70101;
+  border-radius: 10px 10px 0px 0px !important;
+  background-color: #fff;
+  border-bottom: 0px;
+}
+/* line 38, ../sass/main.scss */
+#header .nav-tabs .active a {
+  color: #f70101;
+}
+/* line 42, ../sass/main.scss */
+#header a {
+  color: #f4f4f4;
+  font-weight: 600;
+  border-radius: 10px 10px 0px 0px !important;
+}
+
+/* line 48, ../sass/main.scss */
+#container {
+  padding: 50px;
+}

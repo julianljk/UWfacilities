@@ -1,0 +1,50 @@
+$red: #f70101;
+$white: rgb(244, 244, 244);
+
+body {
+	background-image: url("../img/bg1.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	width: 100%;
+	z-index: 0;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover; 
+}
+#header{
+	#title{
+		float:left;
+		color: $white;
+	}
+	background-color: $red;
+	padding: 20px 40px 0px 40px;
+	.nav-tabs{
+		border-bottom: 0px;
+		li{
+			padding: 0px 10px;
+			float: right;
+			&:hover, &:active{				
+				 a{
+				 	color: $red;
+				 	border-radius: 10px 10px 0px 0px !important;
+				 	background-color: #fff;
+				 	border-bottom: 0px;
+				 }
+			}
+		}
+		.active a{
+			color: $red;
+		}
+	}
+	a{
+		color: $white;
+		font-weight: 600;
+		border-radius: 10px 10px 0px 0px !important;
+	}
+}
+#container{
+	padding: 50px;
+}
