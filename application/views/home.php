@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html> 
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,8 +19,38 @@
     </head>
     
     <body>
-        <div id="container">
-            <?php echo $content; ?>
+        <div id="header">
+            <div id="title">
+                UW Facilities
+            </div>
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="active"><a href="#">About</a></li>
+              <li role="presentation"><a href="#">Profile</a></li>
+              <li role="presentation"><a href="#">Home</a></li>
+            </ul>
         </div>
+
+        <div id="container" ng-app ng-controller="facCtrl">
+            <input type="text" ng-model="id" />
+            <a href="#" ng-click="get(id)">GET</a>
+            <div ng-repeat="item in items">
+                {{item.id}}<br />
+                {{item.title}}<br />
+                {{item.Action}}<br />
+                
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var host = "http://localhost";
+            function facCtrl($scope, $http){
+                $scope.items = {};
+                $scope.get = function(id){
+                    $http.get(host + '/index.php/get/' + id).success(function(data) { 
+                        $scope.items = data;
+                    });
+                }
+            }
+        </script>
     </body>
 </html>

@@ -2,6 +2,10 @@
 
 class Welcome extends CI_Controller {
 
+	function __construct(){
+		parent::__construct();
+		$this->load->model('home_model');
+	}
 	/**
 	 * Index Page for this controller.
 	 *
@@ -19,8 +23,12 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$view['exampleData'] = $this->home_model->getData();
+		$view['data'] = $this->home_model->getData();
 		$this->load->view('home', $view);
+	}
+
+	public function get($id){
+		 echo json_encode($this->home_model->get($id));
 	}
 }
 

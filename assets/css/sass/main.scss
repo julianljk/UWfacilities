@@ -1,4 +1,4 @@
-$red: #f70101;
+$green: #f70101;
 $white: rgb(244, 244, 244);
 
 body {
@@ -19,7 +19,7 @@ body {
 		float:left;
 		color: $white;
 	}
-	background-color: $red;
+	background-color: $green;
 	padding: 20px 40px 0px 40px;
 	.nav-tabs{
 		border-bottom: 0px;
@@ -28,7 +28,7 @@ body {
 			float: right;
 			&:hover, &:active{				
 				 a{
-				 	color: $red;
+				 	color: $green;
 				 	border-radius: 10px 10px 0px 0px !important;
 				 	background-color: #fff;
 				 	border-bottom: 0px;
@@ -36,7 +36,7 @@ body {
 			}
 		}
 		.active a{
-			color: $red;
+			color: $green;
 		}
 	}
 	a{
