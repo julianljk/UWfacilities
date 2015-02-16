@@ -41,7 +41,7 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 //$route['yurAcunt'] = "welcome/index";
-//$route['get/(:num)'] = "welcome/get/$1";
+$route['get/(:num)'] = "welcome/get/$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

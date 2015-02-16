@@ -23,13 +23,14 @@ class Home_model extends CI_Model {
 	}
 
 	public function get($id){
-		//return $this->db->select('programs.title, programs.proj_date, programs.Action, programs.findings, programs.future_opp, programs.authors, programs.FPMpartner_proj, programs.student_org, programs.research_centers, programs.num_students, programs.doc_name, programs.doc_type')
 		$this->db->select('*')
 			->from('programs')
 			->where('programs.id', $id)
-			->join('FPMsector', 'programs.FPMsector_id = FPMsector.id', 'INNER');
+			->join('FPMsector', 'programs.FPMsector_id = FPMsector.id', 'INNER')
 			->join('Departments', 'programs.dept_id = Departments.id', 'LEFT')
-			//->join('Departments', 'programs.academic_dept = Departments.id', 'INNER')
+			->join('Academic_Depts', 'programs.academic_dept = Academic_Depts.id', 'LEFT');
+			//the only reason there are actually 2 tables is because codeIgniter is too retarded to 
+			//be able to left join on the same table twice
 		return $this->db->get()->result_array();
 	}
 
