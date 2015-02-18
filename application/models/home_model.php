@@ -28,11 +28,37 @@ class Home_model extends CI_Model {
 			->where('programs.id', $id)
 			->join('FPMsector', 'programs.FPMsector_id = FPMsector.id', 'INNER')
 			->join('Departments', 'programs.dept_id = Departments.id', 'LEFT')
-			->join('Academic_Depts', 'programs.academic_dept = Academic_Depts.id', 'LEFT');
-			//the only reason there are actually 2 tables is because codeIgniter is too retarded to 
-			//be able to left join on the same table twice
+			->join('Academic_Depts', 'programs.academic_dept_id = Academic_Depts.id', 'LEFT')
+			->join('Student_Orgs', 'programs.stud_org_id = Student_Orgs.org_id', 'LEFT')
+			->join('Document_Types', 'programs.doc_type_id = Document_Types.doc_id', 'LEFT');
+			//one for research too
 		return $this->db->get()->result_array();
 	}
 
+	public function selects($FPM,$academic,$student){
+		$this->db->select('id, dept_id, academic_dept_id, stud_org_id')
+			->from('programs');
+			if($FPM != 0)
+				$this->db->where('dept_id', $FPM);
+			if($academic != 0)
+				$this->db->where('academic_dept_id', $academic);
+			if($student != 0)
+				$this->db->where('stud_org_id', $student);
+
+		//maybe do uniques here
+		return $this->db->get()->result_array();
+	}
+
+	public function getFPM(){
+		return $this->db->select('*')->from('Departments')->get()->result_array();
+	}
+
+	public function getAcademics(){
+		return $this->db->select('*')->from('Academic_Depts')->get()->result_array();
+	}
+
+	public function getStudOrgs(){
+		return $this->db->select('*')->from('Student_Orgs')->get()->result_array();
+	}
 }
 ?>

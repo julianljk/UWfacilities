@@ -23,8 +23,25 @@
             <h1>UW Facilities</h1>
             <div class="col-md-12" style="margin-bottom: 50px;">
                 <div class="col-md-6">
-                    <input type="text" ng-model="id" />
-                    <a href="#" ng-click="get(id)">GET</a> 
+                    <div class="col-md-3">
+                        <input type="text" ng-model="id" />
+                        <a href="#" ng-click="get(id)">GET</a> 
+                    </div>
+                    <div class="col-md-3">
+                        <select ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
+                            <option value="">&nbsp;</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select ng-options="type.academic_name for type in academics track by type.id" ng-model="academicChoice" ng-change="updateLists('academic')">
+                            <option value="">&nbsp;</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select ng-options="type.org_name for type in stud_orgs track by type.org_id" ng-model="studentChoice" ng-change="updateLists('student')">
+                            <option value="">&nbsp;</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div ng-show="items.length" class="col-md-12 results">
@@ -160,10 +177,35 @@
             var host = "http://localhost";
             function facCtrl($scope, $http){
                 $scope.items = {};
+
+                $scope.FPMchoice = 0;
+                $scope.academicChoice = 0;
+                $scope.studentChoice = 0;
+
+                var FPMlist = <?php echo json_encode($FPM); ?>;
+                var AcademicList = <?php echo json_encode($academics); ?>;
+                var StudentList = <?php echo json_encode($stud_orgs); ?>;
+                
+                $scope.FPM = FPMlist;
+                $scope.academics = AcademicList;
+                $scope.stud_orgs = StudentList;
+
+                console.log($scope.FPM, $scope.academics, $scope.stud_orgs);
+
                 $scope.get = function(id){
                     $http.get(host + '/index.php/get/' + id).success(function(data) { 
                         $scope.items = data;
+                    });
+                }
+
+                $scope.updateLists = function(changed){
+                    var f = $scope.FPMchoice ? $scope.FPMchoice.id : 0;
+                    var a = $scope.academicChoice ? $scope.academicChoice.id : 0;
+                    var s = $scope.studentChoice ? $scope.studentChoice.org_id : 0;
+
+                    $.get(host + '/index.php/selects/' + f + "/" + a + "/" + s).success(function(data) { 
                         console.log(data);
+                        
                     });
                 }
             }

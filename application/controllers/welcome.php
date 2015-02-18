@@ -6,29 +6,22 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->model('home_model');
 	}
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+
 	public function index()
 	{
 		$view['data'] = $this->home_model->getData();
+		$view['FPM'] = $this->home_model->getFPM();
+		$view['academics'] = $this->home_model->getAcademics();
+		$view['stud_orgs'] = $this->home_model->getStudOrgs();
 		$this->load->view('home', $view);
 	}
 
 	public function get($id){
 		 echo json_encode($this->home_model->get($id));
+	}
+
+	public function selects($FPM,$academic,$student){
+		echo json_encode($this->home_model->selects($FPM,$academic,$student));
 	}
 }
 
