@@ -26,8 +26,15 @@
                     <div class="col-md-3">
                         <!--<input type="text" ng-model="id" />
                         <a href="#" ng-click="get(id)">GET</a> -->
-                       <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{left}}</h4>
-                       <a class="btn btn-primary" ng-click="reset()">reset</a>
+                        <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{ids.length}}</h4>
+                        <div style="padding-left:0px; width:265px">
+                            <div class="col-xs-5">
+                                <a class="btn btn-success" ng-click="getAll()">Get All Projects</a>
+                            </div>
+                            <div class="col-xs-7">
+                                <a class="btn btn-primary" ng-click="reset()">Reset</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <select ng-show="editFPM" ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
@@ -200,7 +207,7 @@
             };
 
             function makeIndexedArr(array,mode){
-                var ret = {};
+                var ret = [];
                 var i = 0;
 
                 switch(mode){
@@ -225,7 +232,8 @@
 
 
             function facCtrl($scope, $http){
-                $scope.items = {};
+                $scope.items = [];
+                $scope.ids = [];
 
                 $scope.FPMchoice = 0;
                 $scope.academicChoice = 0;
@@ -238,7 +246,6 @@
                 $scope.FPM = FPMlist;
                 $scope.academics = AcademicList;
                 $scope.stud_orgs = StudentList;
-                $scope.left = 0;
 
                 $scope.get = function(id){
                     $http.get(host + '/index.php/get/' + id).success(function(data) { 
@@ -247,7 +254,8 @@
                 }
 
                 $scope.reset = function(){
-                    $scope.items = {};
+                    $scope.items = [];
+                    $scope.ids = [];
 
                     $scope.FPMchoice = 0;
                     $scope.academicChoice = 0;
@@ -260,7 +268,6 @@
                     $scope.FPM = FPMlist;
                     $scope.academics = AcademicList;
                     $scope.stud_orgs = StudentList;
-                    $scope.left = 0;
                 }
 
                 $scope.updateLists = function(changed){
@@ -290,7 +297,7 @@
                             $scope.FPM = [];
                             $scope.academics = [];
                             $scope.stud_orgs = [];
-                            $scope.left = data.length;
+                            $scope.ids = [];
 
                             for(var j = 0; j < data.length; j++){
                                 if($scope.editFPM)
@@ -299,6 +306,7 @@
                                     $scope.academics[data[j].academic_dept_id] = AcademicList[AcademicListInd[data[j].academic_dept_id]];
                                 if($scope.editStudent)
                                     $scope.stud_orgs[data[j].stud_org_id] = StudentList[StudentListInd[data[j].stud_org_id]];
+                                $scope.ids[j] = data[j].id;
                             }   
 
                             $scope.FPM.clean(undefined);
