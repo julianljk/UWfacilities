@@ -21,26 +21,31 @@
     <body>
         <div id="container" ng-app ng-controller="facCtrl">
             <h1>UW Facilities</h1>
-            <div class="col-md-12" style="margin-bottom: 50px;">
+            <div class="col-md-12" style="margin-bottom: 50px;">             
                 <div class="col-md-6">
                     <div class="col-md-3">
-                        <input type="text" ng-model="id" />
-                        <a href="#" ng-click="get(id)">GET</a> 
+                        <!--<input type="text" ng-model="id" />
+                        <a href="#" ng-click="get(id)">GET</a> -->
+                       <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{left}}</h4>
+                       <a class="btn btn-primary" ng-click="reset()">reset</a>
                     </div>
                     <div class="col-md-3">
-                        <select ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
+                        <select ng-show="editFPM" ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
                             <option value="">&nbsp;</option>
                         </select>
+                        <h4 ng-show="!editFPM">{{FPMchoice.dept_name}}</h4>
                     </div>
                     <div class="col-md-3">
-                        <select ng-options="type.academic_name for type in academics track by type.id" ng-model="academicChoice" ng-change="updateLists('academic')">
+                        <select ng-show="editAcademics" ng-options="type.academic_name for type in academics track by type.id" ng-model="academicChoice" ng-change="updateLists('academic')">
                             <option value="">&nbsp;</option>
                         </select>
+                        <h4 ng-show="!editAcademics">{{academicChoice.academic_name}}</h4>
                     </div>
                     <div class="col-md-3">
-                        <select ng-options="type.org_name for type in stud_orgs track by type.org_id" ng-model="studentChoice" ng-change="updateLists('student')">
+                        <select ng-show="editStudent" ng-options="type.org_name for type in stud_orgs track by type.org_id" ng-model="studentChoice" ng-change="updateLists('student')">
                             <option value="">&nbsp;</option>
                         </select>
+                        <h4 ng-show="!editStudent">{{studentChoice.org_name}}</h4>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -175,6 +180,50 @@
 
         <script type="text/javascript">
             var host = "http://localhost";
+            var FPMlist = <?php echo json_encode($FPM); ?>;
+            var AcademicList = <?php echo json_encode($academics); ?>;
+            var StudentList = <?php echo json_encode($stud_orgs); ?>;
+            var FPMlistInd = makeIndexedArr(FPMlist,"FPM");
+            var AcademicListInd = makeIndexedArr(AcademicList,"Academics");
+            var StudentListInd = makeIndexedArr(StudentList,"Student");
+
+            var arrs;
+
+            Array.prototype.clean = function(deleteValue) {
+              for (var i = 0; i < this.length; i++) {
+                if (this[i] == deleteValue) {         
+                  this.splice(i, 1);
+                  i--;
+                }
+              }
+              return this;
+            };
+
+            function makeIndexedArr(array,mode){
+                var ret = {};
+                var i = 0;
+
+                switch(mode){
+                    case "FPM":
+                        for(i; i < array.length; i++){
+                          ret[array[i].id] = i;
+                        }
+                        break;
+                    case "Academics":
+                        for(i; i < array.length; i++){
+                          ret[array[i].id] = i;
+                        }
+                        break;
+                    case "Student":
+                        for(i; i < array.length; i++){
+                          ret[array[i].org_id] = i;
+                        }
+                        break;
+                    }
+                return ret;
+              };
+
+
             function facCtrl($scope, $http){
                 $scope.items = {};
 
@@ -182,15 +231,14 @@
                 $scope.academicChoice = 0;
                 $scope.studentChoice = 0;
 
-                var FPMlist = <?php echo json_encode($FPM); ?>;
-                var AcademicList = <?php echo json_encode($academics); ?>;
-                var StudentList = <?php echo json_encode($stud_orgs); ?>;
-                
+                $scope.editFPM = true;
+                $scope.editAcademics = true;
+                $scope.editStudent = true;
+
                 $scope.FPM = FPMlist;
                 $scope.academics = AcademicList;
                 $scope.stud_orgs = StudentList;
-
-                console.log($scope.FPM, $scope.academics, $scope.stud_orgs);
+                $scope.left = 0;
 
                 $scope.get = function(id){
                     $http.get(host + '/index.php/get/' + id).success(function(data) { 
@@ -198,14 +246,65 @@
                     });
                 }
 
+                $scope.reset = function(){
+                    $scope.items = {};
+
+                    $scope.FPMchoice = 0;
+                    $scope.academicChoice = 0;
+                    $scope.studentChoice = 0;
+
+                    $scope.editFPM = true;
+                    $scope.editAcademics = true;
+                    $scope.editStudent = true;
+
+                    $scope.FPM = FPMlist;
+                    $scope.academics = AcademicList;
+                    $scope.stud_orgs = StudentList;
+                    $scope.left = 0;
+                }
+
                 $scope.updateLists = function(changed){
+                    //changed = 'FPM', 'academic', 'student'
+                    switch(changed){
+                        case "FPM":
+                            $scope.editFPM = false;
+                            break;
+                        case "academic":
+                            $scope.editAcademics = false;
+                            break;
+                        case "student":
+                            $scope.editStudent = false;
+                            break;
+                    }
                     var f = $scope.FPMchoice ? $scope.FPMchoice.id : 0;
                     var a = $scope.academicChoice ? $scope.academicChoice.id : 0;
                     var s = $scope.studentChoice ? $scope.studentChoice.org_id : 0;
 
-                    $.get(host + '/index.php/selects/' + f + "/" + a + "/" + s).success(function(data) { 
-                        console.log(data);
-                        
+                    $.ajax({
+                        async: false,//apparently this is depreciated so may have to change. need it for now
+                        type: 'GET',
+                        url: host + '/index.php/selects/' + f + "/" + a + "/" + s,
+                        success: function(data) { 
+                            data = JSON.parse(data);
+
+                            $scope.FPM = [];
+                            $scope.academics = [];
+                            $scope.stud_orgs = [];
+                            $scope.left = data.length;
+
+                            for(var j = 0; j < data.length; j++){
+                                if($scope.editFPM)
+                                    $scope.FPM[data[j].dept_id] = FPMlist[FPMlistInd[data[j].dept_id]];
+                                if($scope.editAcademics)
+                                    $scope.academics[data[j].academic_dept_id] = AcademicList[AcademicListInd[data[j].academic_dept_id]];
+                                if($scope.editStudent)
+                                    $scope.stud_orgs[data[j].stud_org_id] = StudentList[StudentListInd[data[j].stud_org_id]];
+                            }   
+
+                            $scope.FPM.clean(undefined);
+                            $scope.academics.clean(undefined);
+                            $scope.stud_orgs.clean(undefined);
+                        }
                     });
                 }
             }
