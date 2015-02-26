@@ -45,20 +45,19 @@ class Home_model extends CI_Model {
 			if($student != 0)
 				$this->db->where('stud_org_id', $student);
 
-		//maybe do uniques here
 		return $this->db->get()->result_array();
 	}
 
 	public function getFPM(){
-		return $this->db->select('*')->from('Departments')->get()->result_array();
+		return $this->db->select('*')->from('Departments')->order_by('dept_name','asc')->get()->result_array();
 	}
 
 	public function getAcademics(){
-		return $this->db->select('*')->from('Academic_Depts')->get()->result_array();
+		return $this->db->select('*')->from('Academic_Depts')->order_by('academic_name','asc')->get()->result_array();
 	}
 
 	public function getStudOrgs(){
-		return $this->db->select('*')->from('Student_Orgs')->get()->result_array();
+		return $this->db->select('*')->from('Student_Orgs')->order_by('org_name','asc')->get()->result_array();
 	}
 }
 ?>
