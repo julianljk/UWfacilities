@@ -248,8 +248,26 @@
                 $scope.stud_orgs = StudentList;
 
                 $scope.get = function(id){
-                    $http.get(host + '/index.php/get/' + id).success(function(data) { 
+                    $http.get(host + '/get/' + id).success(function(data) { 
                         $scope.items = data;
+                    });
+                }
+
+                $scope.getAll = function(){
+                   /* var param = {};
+                    for (var i = 0; i < $scope.ids.length; i++)
+                        param[''+]*/
+                    console.log(JSON.stringify({ ids: $scope.ids }));
+                    $http({
+                        method: 'POST',
+                        url: host + '/getAll/',         
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        dataType: "json",
+                        data: JSON.stringify({ ids: $scope.ids }),
+                    })
+                    .success(function(data){
+                        //$scope.items = data;
+                        console.log(data);
                     });
                 }
 
@@ -290,7 +308,7 @@
                     $.ajax({
                         async: false,//apparently this is depreciated so may have to change. need it for now
                         type: 'GET',
-                        url: host + '/index.php/selects/' + f + "/" + a + "/" + s,
+                        url: host + '/selects/' + f + "/" + a + "/" + s,
                         success: function(data) { 
                             data = JSON.parse(data);
 

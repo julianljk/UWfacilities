@@ -5,6 +5,7 @@ class Welcome extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('home_model');
+		$this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
@@ -18,6 +19,11 @@ class Welcome extends CI_Controller {
 
 	public function get($id){
 		 echo json_encode($this->home_model->get($id));
+	}
+
+	public function getAll(){
+		echo var_dump($_POST);exit;
+		echo json_encode($this->home_model->getAll($this->input->post()));
 	}
 
 	public function selects($FPM,$academic,$student){

@@ -35,6 +35,20 @@ class Home_model extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+	public function getAll($ids){
+		return var_dump($ids);
+		$this->db->select('*')
+			->from('programs')
+			->where_in('programs.id', $ids)
+			->join('FPMsector', 'programs.FPMsector_id = FPMsector.id', 'INNER')
+			->join('Departments', 'programs.dept_id = Departments.id', 'LEFT')
+			->join('Academic_Depts', 'programs.academic_dept_id = Academic_Depts.id', 'LEFT')
+			->join('Student_Orgs', 'programs.stud_org_id = Student_Orgs.org_id', 'LEFT')
+			->join('Document_Types', 'programs.doc_type_id = Document_Types.doc_id', 'LEFT');
+			//->join('Document_Types', 'programs.doc_type_id = Document_Types.doc_id', 'LEFT');
+		return $this->db->get()->result_array();
+	}
+
 	public function selects($FPM,$academic,$student){
 		$this->db->select('id, dept_id, academic_dept_id, stud_org_id')
 			->from('programs');
