@@ -251,7 +251,6 @@
                 }
 
                 $scope.getAll = function(){
-                   /* because dumb cunts can't fucking have post working that would be too fucking easy now wouldn't it*/
                    $scope.items = [];
                    for(var i = 0; i < $scope.ids.length; i++){
                        $scope.get(i); 
