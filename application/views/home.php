@@ -8,24 +8,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/css/main.css'); ?>">
         <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/bootstrap-lightbox.min.css'); ?>">
-
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-        <!--<script src="<?php //echo base_url('assets/js/bootstrap-lightbox.min.js');?>"></script>-->
-       
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+        <script src="<?php echo $this->config->base_url('assets/js/jquery-1.3.2.js'); ?>"></script>
+        <script src="<?php echo $this->config->base_url('assets/js/ui.core.js'); ?>"></script>
+        <script src="<?php echo $this->config->base_url('assets/js/ui.carousel.js'); ?>"></script>
     </head>
-    
+
+     <!--<input type="text" ng-model="id" />
+                        <a href="#" ng-click="get(id)">GET</a> -->
     <body>
         <div id="container" ng-app ng-controller="facCtrl">
-            <h1>UW Facilities</h1>
+            <h1>UW Facilities1</h1>
             <div class="col-md-12" style="margin-bottom: 50px;">             
                 <div class="col-md-6">
                     <div class="col-md-3">
-                        <!--<input type="text" ng-model="id" />
-                        <a href="#" ng-click="get(id)">GET</a> -->
+                       
                         <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{ids.length}}</h4>
                         <div style="padding-left:0px; width:265px">
                             <div class="col-xs-5">
@@ -38,10 +39,10 @@
                     </div>
                     <div class="col-md-3">
                         <h3>FP&amp;M Department</h3><br />
-                        <select ng-show="editFPM" ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
+                        <!--select ng-show="editFPM" ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
                             <option value="">&nbsp;</option>
                         </select>
-                        <h4 ng-show="!editFPM">{{FPMchoice.dept_name}}</h4>
+                        <h4 ng-show="!editFPM">{{FPMchoice.dept_name}}</h4-->
                     </div>
                     <div class="col-md-3">
                         <h3>Academic Department</h3><br />
@@ -179,14 +180,55 @@
                     </div>
                 </div>
             </div>
-        </div>
+            {{studentChoice}}
+            <div class="demo">
+                <ul id="carousel" class ="carousel col-md-4">
+                    <li ng-repeat="type in FPM" class="listEle0{{$index}}" ng-click="setFPMchoice(type)">{{type.dept_name}}</li>
+                    <!--sli class = "listEle01">Listelem 1</li>   
+                    <li class = "listEle02">Campus Planning and Landscape Architecture</li>     
+                    <li class = "listEle03">Capital Planning and Development</li>       
+                    <li class = "listEle04">Environment Health and Safety</li>      
+                    <li class = "listEle05">Office of the Associate Vice Chancellor</li>        
+                    <li class = "listEle06">Physical Plant</li>     
+                    <li class = "listEle07">Space Management Office</li>        
+                    <li class = "listEle08">Transportation Services</li-->
+                </ul>
+            </div>
+        <!-- End demo -->
+            <div class="demo">
+                <ul id="carousel1" class ="carousel col-md-4">
+                    <li ng-repeat="type in academics" class="listEle1{{$index}}" ng-click="setACADEMICSchoice(type)">{{type.academic_name}}</li>
+                    <!--li class = "listEle11">Engineering</li>        
+                    <li class = "listEle12">Transportation</li>     
+                    <li class = "listEle13">Botany</li>     
+                    <li class = "listEle14">Academics</li>      
+                    <li class = "listEle15">Campus Planning</li>        
+                    <li class = "listEle16">Physical Plant</li>     
+                    <li class = "listEle17">Biology</li>        
+                    <li class = "listEle18"> Alfonso Morales</li -->
+                </ul>
+            </div>
+            <div class="demo">
+                <ul id="carousel2" class ="carousel col-md-4">
+                    <li ng-repeat="type in stud_orgs" class="listEle2{{$index}}" ng-click="setORGchoice(type)">{{type.student}}</li>                    
+                    <!-- li class = "listEle21">Engineering</li>        
+                    <li class = "listEle22">Transportation</li>     
+                    <li class = "listEle23">Botany</li>     
+                    <li class = "listEle24">Academics</li>      
+                    <li class = "listEle25">Campus Planning</li>        
+                    <li class = "listEle26">Physical Plant</li>     
+                    <li class = "listEle27">Biology</li>        
+                    <li class = "listEle28"> Alfonso Morales</li -->
+                </ul>
+            </div>
+        </div> 
 
         <script type="text/javascript">
             var host = "http://localhost";
             var FPMlist = <?php echo json_encode($FPM); ?>;
             var AcademicList = <?php echo json_encode($academics); ?>;
             var StudentList = <?php echo json_encode($stud_orgs); ?>;
-            var FPMlistInd = makeIndexedArr(FPMlist,"FPM");
+            var FPMlistInd = makeIndexedArr(FPMlist,"FPM"); //returns an array of size
             var AcademicListInd = makeIndexedArr(AcademicList,"Academics");
             var StudentListInd = makeIndexedArr(StudentList,"Student");
 
@@ -243,8 +285,24 @@
                 $scope.academics = AcademicList;
                 $scope.stud_orgs = StudentList;
 
+                $scope.setFPMchoice = function(type){
+                    $scope.FPMchoice = type;
+                    $scope.updateLists('FPM');
+                    console.log(type);
+                };
+                $scope.setACADEMICSchoice = function(type){
+                    $scope.FPMchoice = type;
+                    $scope.updateLists('academic');
+                    console.log(type);
+                };
+                $scope.setORGchoice = function(type){
+                    $scope.FPMchoice = type;
+                    $scope.updateLists('student');
+                    console.log(type);
+                };
+
                 $scope.get = function(ind){
-                    $http.get(host + '/get/' + $scope.ids[ind])
+                    $http.get('/get/' + $scope.ids[ind])
                         .success(function(data) { 
                             $scope.items[ind] = data[0];
                         });
@@ -252,6 +310,7 @@
 
                 $scope.getAll = function(){
                    $scope.items = [];
+                   console.log($scope.ids);
                    for(var i = 0; i < $scope.ids.length; i++){
                        $scope.get(i); 
                     }
@@ -288,6 +347,7 @@
                     switch(changed){
                         case "FPM":
                             $scope.editFPM = false;
+                            console.log('fdsasfsdfafsf');
                             break;
                         case "academic":
                             $scope.editAcademics = false;
@@ -300,10 +360,12 @@
                     var a = $scope.academicChoice ? $scope.academicChoice.id : 0;
                     var s = $scope.studentChoice ? $scope.studentChoice.org_id : 0;
 
+                    console.log(host + '/selects/' + f + "/" + a + "/" + s);
+
                     $.ajax({
                         async: false,//apparently this is depreciated so may have to change. need it for now
                         type: 'GET',
-                        url: host + '/selects/' + f + "/" + a + "/" + s,
+                        url: '/selects/' + f + "/" + a + "/" + s,
                         success: function(data) { 
                             data = JSON.parse(data);
 
@@ -329,6 +391,91 @@
                     });
                 }
             }
+
+            $(document).ready(function()
+            {
+                window.setTimeout(function() {
+                    $("#carousel").carousel({
+                        orientation: 'vertical',
+                        radius: 200
+                    });
+                });
+            
+                //You don't need this timeout in your pages - Safari has stupid issues with our demo system
+                window.setTimeout(function() {
+                    $("#carousel1").carousel({
+                        orientation: 'vertical',
+                        radius: 200
+                    });
+                });
+                //You don't need this timeout in your pages - Safari has stupid issues with our demo system
+                window.setTimeout(function() {
+                    $("#carousel2").carousel({
+                        orientation: 'vertical',
+                        radius: 200
+                    });
+                });
+            
+                for (var i = 1; i < 9; i++)
+                {
+                    var myElement = ".listEle0" + i;  
+                    fade(myElement, true);
+                }
+                for (var i = 1; i < 9; i++)
+                {
+                    var myElement = ".listEle1" + i;  
+                    fade(myElement, true);
+                }
+                for (var i = 1; i < 9; i++)
+                {
+                    var myElement = ".listEle2" + i;  
+                    fade(myElement, true);
+                }
+            
+                function fade (currObject, myBoolean)
+                {
+                    window.setInterval(function(){
+                        var n = $(currObject).css("z-index"); 
+                        if (n < 15 && myBoolean == false )
+                        {
+                            myBoolean = true;
+                            $(currObject).fadeIn(100);
+                        }
+                        else if (n > 15 && myBoolean == true)
+                        {
+                            myBoolean = false;
+                            $(currObject).fadeOut(500);
+                        }
+                    }, 20);
+                }
+                $("li").click(function(){
+                    var text = $("." + $(this).attr("class")).text();
+                    var carouselNumber = $(this).attr("class");
+                    carouselNumber = carouselNumber.charAt(carouselNumber.length - 2)
+                    if (carouselNumber == 0)
+                    {
+                        $(".currEl1").html("The current element is: " + text);
+                    }
+                });
+                $("li").click(function(){
+                    var text = $("." + $(this).attr("class")).text();
+                    var carouselNumber = $(this).attr("class");
+                    carouselNumber = carouselNumber.charAt(carouselNumber.length - 2);
+                    if (carouselNumber == 1)
+                    {
+                        $(".currEl2").html("The current element is: " + text);
+                    }
+                });
+                $("li").click(function(){
+                    var text = $("." + $(this).attr("class")).text();
+                    var carouselNumber = $(this).attr("class");
+                    carouselNumber = carouselNumber.charAt(carouselNumber.length - 2);
+                    if (carouselNumber == 2)
+                    {
+                        $(".currEl3").html("The current element is: " + text);
+                    }
+                });
+            });
         </script>
     </body>
 </html>

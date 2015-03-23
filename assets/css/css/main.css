@@ -78,3 +78,64 @@ body {
 select {
   width: 150px;
 }
+.header {
+    height:50px;
+    background:#F0F0F0;
+    border:1px solid #CCC;
+    width:960px;
+    margin:0px auto;
+}
+.content {
+    width:960px;
+    background: #F0F0F0;
+    border: 1px solid #CCC;
+    height: 2000px;
+    margin: 20px auto;
+}
+
+/* Carousel part of the CSS */
+
+body {
+  font-size: 62.5%;
+}
+
+table {
+  font-size: 1em;
+}
+columnA {
+  float: left;
+  width: 20%;
+}
+.carousel, .carousel1, .carousel2
+{ 
+  position: left; 
+  margin: 0; 
+  padding: 0;
+  border-top-width: 130px;
+  height: 100px;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  overflow: hidden;
+}
+.carousel li, .carousel1 li, .carousel2 li 
+{ 
+  font-family: "Trebuchet MS";
+  font-weight: bold;
+  font-size: 2.0em;
+  float: left; 
+  cursor: pointer; 
+  cursor: hand; 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+  width: 120px; 
+  height: 80px; 
+}
+.demo
+{
+  border-top: solid;
+  border-width: 1px;
+}
+
+
+
