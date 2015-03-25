@@ -6,9 +6,9 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/css/main.css'); ?>">
         <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/bootstrap-lightbox.min.css'); ?>">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/css/main.css'); ?>">
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
@@ -22,43 +22,40 @@
                         <a href="#" ng-click="get(id)">GET</a> -->
     <body>
         <div id="container" ng-app ng-controller="facCtrl">
-            <h1>UW Facilities1</h1>
-            <div class="col-md-12" style="margin-bottom: 50px;">             
-                <div class="col-md-6">
-                    <div class="col-md-3">
-                       
-                        <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{ids.length}}</h4>
-                        <div style="padding-left:0px; width:265px">
-                            <div class="col-xs-5">
-                                <a class="btn btn-success" ng-click="getAll()">Get All Projects</a>
-                            </div>
-                            <div class="col-xs-7">
-                                <a class="btn btn-primary" ng-click="reset()">Reset</a>
-                            </div>
+            <h1 style="margin-left:50px; margin-bottom: 35px; font-size:4.0em">UW Facilities</h1>   
+            <div class="divider" style="border-bottom: solid 1px;"></div>   
+                <div class="col-md-4"><h2>FP&amp;M Department</h2></div>
+                <div class="col-md-4"><h2>Academic Department</h2></div>
+                <div class="col-md-4"><h2>Student Organization</h2></div>
+            <div class="clearfix"></div>
+            <div class="divider" style="border-bottom: solid 1px;"></div>
+            
+                <div class="demo">
+                    <ul id="carousel" class ="carousel col-md-4">
+                        <li ng-repeat="type in FPM" class="listEle0{{$index}}" ng-click="setFPMchoice(type)">{{type.dept_name}}</li>
+                    </ul>
+                </div>
+                <div class="demo">
+                    <ul id="carousel1" class ="carousel col-md-4">
+                        <li ng-repeat="type in academics" class="listEle1{{$index}}" ng-click="setACADEMICSchoice(type)">{{type.academic_name}}</li>
+                    </ul>
+                </div>
+                <div class="demo">
+                    <ul id="carousel2" class ="carousel col-md-4">
+                        <li ng-repeat="type in stud_orgs" class="listEle2{{$index}}" ng-click="setORGchoice(type)">{{type.student}}</li>                    
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="divider" style="border-top: solid 1px;"></div>
+                    <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{ids.length}}</h4>
+                    <div style="padding-left:0px; width:265px; margin-top: 15px;" >
+                        <div class="col-xs-3">
+                            <a class="btn btn-success" ng-click="getAll()">Get All Projects</a>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <a class="btn btn-primary" ng-click="reset()">Reset</a>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <h3>FP&amp;M Department</h3><br />
-                        <!--select ng-show="editFPM" ng-options="type.dept_name for type in FPM track by type.id" ng-model="FPMchoice" ng-change="updateLists('FPM')">
-                            <option value="">&nbsp;</option>
-                        </select>
-                        <h4 ng-show="!editFPM">{{FPMchoice.dept_name}}</h4-->
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Academic Department</h3><br />
-                        <select ng-show="editAcademics" ng-options="type.academic_name for type in academics track by type.id" ng-model="academicChoice" ng-change="updateLists('academic')">
-                            <option value="">&nbsp;</option>
-                        </select>
-                        <h4 ng-show="!editAcademics">{{academicChoice.academic_name}}</h4>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Student Organisation</h3><br />
-                        <select ng-show="editStudent" ng-options="type.org_name for type in stud_orgs track by type.org_id" ng-model="studentChoice" ng-change="updateLists('student')">
-                            <option value="">&nbsp;</option>
-                        </select>
-                        <h4 ng-show="!editStudent">{{studentChoice.org_name}}</h4>
-                    </div>
-                </div>
                 <div class="col-md-6">
                     <div ng-show="items.length" class="col-md-12 results">
                         <div class="items">
@@ -179,50 +176,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            {{studentChoice}}
-            <div class="demo">
-                <ul id="carousel" class ="carousel col-md-4">
-                    <li ng-repeat="type in FPM" class="listEle0{{$index}}" ng-click="setFPMchoice(type)">{{type.dept_name}}</li>
-                    <!--sli class = "listEle01">Listelem 1</li>   
-                    <li class = "listEle02">Campus Planning and Landscape Architecture</li>     
-                    <li class = "listEle03">Capital Planning and Development</li>       
-                    <li class = "listEle04">Environment Health and Safety</li>      
-                    <li class = "listEle05">Office of the Associate Vice Chancellor</li>        
-                    <li class = "listEle06">Physical Plant</li>     
-                    <li class = "listEle07">Space Management Office</li>        
-                    <li class = "listEle08">Transportation Services</li-->
-                </ul>
-            </div>
-        <!-- End demo -->
-            <div class="demo">
-                <ul id="carousel1" class ="carousel col-md-4">
-                    <li ng-repeat="type in academics" class="listEle1{{$index}}" ng-click="setACADEMICSchoice(type)">{{type.academic_name}}</li>
-                    <!--li class = "listEle11">Engineering</li>        
-                    <li class = "listEle12">Transportation</li>     
-                    <li class = "listEle13">Botany</li>     
-                    <li class = "listEle14">Academics</li>      
-                    <li class = "listEle15">Campus Planning</li>        
-                    <li class = "listEle16">Physical Plant</li>     
-                    <li class = "listEle17">Biology</li>        
-                    <li class = "listEle18"> Alfonso Morales</li -->
-                </ul>
-            </div>
-            <div class="demo">
-                <ul id="carousel2" class ="carousel col-md-4">
-                    <li ng-repeat="type in stud_orgs" class="listEle2{{$index}}" ng-click="setORGchoice(type)">{{type.student}}</li>                    
-                    <!-- li class = "listEle21">Engineering</li>        
-                    <li class = "listEle22">Transportation</li>     
-                    <li class = "listEle23">Botany</li>     
-                    <li class = "listEle24">Academics</li>      
-                    <li class = "listEle25">Campus Planning</li>        
-                    <li class = "listEle26">Physical Plant</li>     
-                    <li class = "listEle27">Biology</li>        
-                    <li class = "listEle28"> Alfonso Morales</li -->
-                </ul>
-            </div>
-        </div> 
-
+        </div>
         <script type="text/javascript">
             var host = "http://localhost";
             var FPMlist = <?php echo json_encode($FPM); ?>;
@@ -288,7 +242,6 @@
                 $scope.setFPMchoice = function(type){
                     $scope.FPMchoice = type;
                     $scope.updateLists('FPM');
-                    console.log(type);
                 };
                 $scope.setACADEMICSchoice = function(type){
                     $scope.FPMchoice = type;
@@ -383,7 +336,7 @@
                                     $scope.stud_orgs[data[j].stud_org_id] = StudentList[StudentListInd[data[j].stud_org_id]];
                                 $scope.ids[j] = data[j].id;
                             }   
-
+                            
                             $scope.FPM.clean(undefined);
                             $scope.academics.clean(undefined);
                             $scope.stud_orgs.clean(undefined);
@@ -400,33 +353,32 @@
                         radius: 200
                     });
                 });
-            
                 //You don't need this timeout in your pages - Safari has stupid issues with our demo system
                 window.setTimeout(function() {
                     $("#carousel1").carousel({
                         orientation: 'vertical',
-                        radius: 200
+                        radius: 250
                     });
                 });
                 //You don't need this timeout in your pages - Safari has stupid issues with our demo system
                 window.setTimeout(function() {
                     $("#carousel2").carousel({
                         orientation: 'vertical',
-                        radius: 200
+                        radius: 250
                     });
                 });
             
-                for (var i = 1; i < 9; i++)
+                for (var i = 0; i < 20; i++)
                 {
                     var myElement = ".listEle0" + i;  
                     fade(myElement, true);
                 }
-                for (var i = 1; i < 9; i++)
+                for (var i = 0; i < 20; i++)
                 {
                     var myElement = ".listEle1" + i;  
                     fade(myElement, true);
                 }
-                for (var i = 1; i < 9; i++)
+                for (var i = 0; i < 20; i++)
                 {
                     var myElement = ".listEle2" + i;  
                     fade(myElement, true);
@@ -436,12 +388,12 @@
                 {
                     window.setInterval(function(){
                         var n = $(currObject).css("z-index"); 
-                        if (n < 15 && myBoolean == false )
+                        if (n < 10 && myBoolean == false )
                         {
                             myBoolean = true;
                             $(currObject).fadeIn(100);
                         }
-                        else if (n > 15 && myBoolean == true)
+                        else if (n > 10 && myBoolean == true)
                         {
                             myBoolean = false;
                             $(currObject).fadeOut(500);

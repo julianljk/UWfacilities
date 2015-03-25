@@ -145,7 +145,7 @@ $.widget("ui.carousel", {
 			$.extend(this.style, {
 				top: self.paddingY + (self.options.orientation == 'vertical' ? x : y) - height/2 + "px",
 				left: self.paddingX + (self.options.orientation == 'vertical' ? y : x) - width/2  - 120 + "px",
-				width: width + 150 + "px",
+				width: width + 200 + "px",
 				height: height + "px",
 				zIndex: parseInt(100 * (self.options.tilt+y) / (2 * self.options.tilt),10)
 			});
@@ -160,7 +160,7 @@ $.extend($.ui.carousel, {
 	defaults: {
 		animate: 0.00000001, //TODO: Setting animate to false also currently blocks animateByMouse
 		animateByMouse: true,
-		distance: 0.0,
+		distance: -0.42,
 		handle: false,
 		items: '> *',
 		orientation: 'horizontal',

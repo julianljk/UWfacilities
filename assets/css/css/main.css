@@ -1,8 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
 /* line 6, ../sass/main.scss */
 body {
-  /*background-image: url("../img/bg1.jpg");*/
-  background-color: #E7D9C1;
+  background-color: #FFFEDF;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -13,7 +12,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-family: "Roboto";
+  font-family: "Arial";
 }
 
 /* line 21, ../sass/main.scss */
@@ -32,7 +31,7 @@ body {
 }
 /* line 30, ../sass/main.scss */
 #header .nav-tabs li {
-  padding: 0px 10px;
+  padding: 0px 20px;
   float: right;
 }
 /* line 34, ../sass/main.scss */
@@ -55,7 +54,7 @@ body {
 
 /* line 52, ../sass/main.scss */
 #container {
-  padding: 50px;
+  padding: 30px;
 }
 /* line 54, ../sass/main.scss */
 #container .results {
@@ -95,10 +94,6 @@ select {
 
 /* Carousel part of the CSS */
 
-body {
-  font-size: 62.5%;
-}
-
 table {
   font-size: 1em;
 }
@@ -131,10 +126,13 @@ columnA {
   width: 120px; 
   height: 80px; 
 }
-.demo
+.divider
 {
-  border-top: solid;
-  border-width: 1px;
+  height:10px;
+}
+.h1
+{
+  text-align: center;
 }
 
 
