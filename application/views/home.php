@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/bootstrap-lightbox.min.css'); ?>">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="<?php echo $this->config->base_url('assets/css/css/main.css'); ?>">
+        <link href='http://fonts.googleapis.com/css?family=Lato|Lora:400,700' rel='stylesheet' type='text/css'>        
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
@@ -21,32 +22,68 @@
      <!--<input type="text" ng-model="id" />
                         <a href="#" ng-click="get(id)">GET</a> -->
     <body>
-        <div id="container" ng-app ng-controller="facCtrl">
+        <div class="col-md-12 title">
             <h1 style="margin-left:50px; margin-bottom: 35px; font-size:4.0em">UW Facilities</h1>   
+        </div>
+        <div id="container" ng-app ng-controller="facCtrl">
+            
             <div class="divider" style="border-bottom: solid 1px;"></div>   
-                <div class="col-md-4"><h2>FP&amp;M Department</h2></div>
-                <div class="col-md-4"><h2>Academic Department</h2></div>
-                <div class="col-md-4"><h2>Student Organization</h2></div>
+                <div class="col-md-4">
+                    <span style="left:354px; top:300px;" class="glyphicon glyphicon-chevron-down"></span>
+                        <h2>FP&amp;M Department</h2>             
+                    <span style="left:355px; top:50px;" class="glyphicon glyphicon-chevron-up"></span>
+                </div>
+                <div class="col-md-4">
+                    <span style="left:354px; top:300px;" class="glyphicon glyphicon-chevron-down"></span>
+                        <h2>Academic Department</h2>
+                    <span style="left:355px; top: 50px;" class="glyphicon glyphicon-chevron-up"></span>
+                </div>
+                <div class="col-md-4">
+                    <span style="left:354px; top:300px;" class="glyphicon glyphicon-chevron-down"></span>
+                        <h2>Student Organization</h2>
+                    <span style="left:355px; top: 50px;" class="glyphicon glyphicon-chevron-up"></span>
+                </div>
             <div class="clearfix"></div>
             <div class="divider" style="border-bottom: solid 1px;"></div>
-            
                 <div class="demo">
-                    <ul id="carousel" class ="carousel col-md-4">
-                        <li ng-repeat="type in FPM" class="listEle0{{$index}}" ng-click="setFPMchoice(type)">{{type.dept_name}}</li>
-                    </ul>
-                </div>
+                        <ul id="carousel" class ="carousel col-md-4">
+                            <li ng-repeat="type in FPMlist" class="listEle0{{$index}}" ng-click="setFPMchoice($index % FPM.length)" ng-show="FPM.length != 0">
+                                <div class="cell">
+                                {{FPM.length != 0 ? FPM[$index % FPM.length].dept_name : ''}}
+                                </div>
+                               <!--  <div class="cell">
+                                    {{type.dept_name + 1}}
+                                </div>   -->
+                            </li> 
+                        </ul>
+                </div> 
                 <div class="demo">
-                    <ul id="carousel1" class ="carousel col-md-4">
-                        <li ng-repeat="type in academics" class="listEle1{{$index}}" ng-click="setACADEMICSchoice(type)">{{type.academic_name}}</li>
+                    <ul id="carousel1" class ="carousel col-md-4" >
+                        <li ng-repeat="type in AcademicList" class="listEle1{{$index}}" ng-click="setACADEMICSchoice($index % academics.length)" ng-show="academics.length != 0">
+                            <div class="cell">
+                                {{academics.length != 0 ? academics[$index % academics.length].academic_name : ''}}
+                            </div>
+                        </li>
+                        <!--li ng-if="academics.length < 4" ng-repeat="type1 in academics" class="listEle1{{$index + academics.length}}" ng-click="setACADEMICSchoice(type)">
+                            <div class="cell">
+                                {{type1.academic_name + 1}}
+                            </div>    
+                        </li-->      
                     </ul>
                 </div>
                 <div class="demo">
                     <ul id="carousel2" class ="carousel col-md-4">
-                        <li ng-repeat="type in stud_orgs" class="listEle2{{$index}}" ng-click="setORGchoice(type)">{{type.student}}</li>                    
+                        <li ng-repeat="type in StudentList " class="listEle2{{$index}}" ng-click="setORGchoice($index % StudentList.length)" ng-show="stud_orgs.length != 0">
+                            <div class="cell">
+                                {{stud_orgs.length != 0 ? stud_orgs[$index % stud_orgs.length].org_name : ''}}
+                            </div>
+                        </li>                    
                     </ul>
                 </div>
                 <div class="clearfix"></div>
                 <div class="divider" style="border-top: solid 1px;"></div>
+                <div style="padding-bottom: 30px">
+                <div class="col-md-12">
                     <h4 ng-show="!(editFPM && editAcademics && editStudent)"> Projects remaining: {{ids.length}}</h4>
                     <div style="padding-left:0px; width:265px; margin-top: 15px;" >
                         <div class="col-xs-3">
@@ -56,7 +93,8 @@
                             <a class="btn btn-primary" ng-click="reset()">Reset</a>
                         </div>
                     </div>
-                <div class="col-md-6">
+                </div>
+                <div class="col-md-10 col-md-offset-1">
                     <div ng-show="items.length" class="col-md-12 results">
                         <div class="items">
                             <div ng-repeat="item in items" style="width: 98%;padding: 0px 20px;">
@@ -235,21 +273,26 @@
                 $scope.editAcademics = true;
                 $scope.editStudent = true;
 
+                $scope.FPMlist = FPMlist;
+                $scope.AcademicList = AcademicList;
+                $scope.StudentList = StudentList;
+
                 $scope.FPM = FPMlist;
                 $scope.academics = AcademicList;
                 $scope.stud_orgs = StudentList;
 
                 $scope.setFPMchoice = function(type){
-                    $scope.FPMchoice = type;
+                    $scope.FPMchoice = $scope.FPM[type];
                     $scope.updateLists('FPM');
+                    console.log(type);
                 };
                 $scope.setACADEMICSchoice = function(type){
-                    $scope.FPMchoice = type;
+                    $scope.academicChoice = $scope.academics[type];
                     $scope.updateLists('academic');
                     console.log(type);
                 };
                 $scope.setORGchoice = function(type){
-                    $scope.FPMchoice = type;
+                    $scope.studentChoice = $scope.stud_orgs[type];
                     $scope.updateLists('student');
                     console.log(type);
                 };
@@ -300,7 +343,6 @@
                     switch(changed){
                         case "FPM":
                             $scope.editFPM = false;
-                            console.log('fdsasfsdfafsf');
                             break;
                         case "academic":
                             $scope.editAcademics = false;
@@ -313,7 +355,8 @@
                     var a = $scope.academicChoice ? $scope.academicChoice.id : 0;
                     var s = $scope.studentChoice ? $scope.studentChoice.org_id : 0;
 
-                    console.log(host + '/selects/' + f + "/" + a + "/" + s);
+
+                    console.log(host + '/selects/' + $scope.FPMchoice + "/" + $scope.academicChoice + "/" + $scope.studentChoice);
 
                     $.ajax({
                         async: false,//apparently this is depreciated so may have to change. need it for now
@@ -340,12 +383,26 @@
                             $scope.FPM.clean(undefined);
                             $scope.academics.clean(undefined);
                             $scope.stud_orgs.clean(undefined);
+                           /* $("#carousel1").carousel('destroy');
+                            // $("#carousel").carousel({
+                            //     orientation: 'vertical',
+                            //     radius: 200
+                            // });
+                            setTimeout($("#carousel1").carousel({
+                                orientation: 'vertical',
+                                radius: 60
+                            })
+                           ,1000);*/
                         }
                     });
                 }
             }
 
             $(document).ready(function()
+            {
+                makeCarousels();    
+            });
+            function makeCarousels()
             {
                 window.setTimeout(function() {
                     $("#carousel").carousel({
@@ -368,17 +425,17 @@
                     });
                 });
             
-                for (var i = 0; i < 20; i++)
+                for (var i = 0; i < 40; i++)
                 {
                     var myElement = ".listEle0" + i;  
                     fade(myElement, true);
                 }
-                for (var i = 0; i < 20; i++)
+                for (var i = 0; i < 40; i++)
                 {
                     var myElement = ".listEle1" + i;  
                     fade(myElement, true);
                 }
-                for (var i = 0; i < 20; i++)
+                for (var i = 0; i < 40; i++)
                 {
                     var myElement = ".listEle2" + i;  
                     fade(myElement, true);
@@ -400,34 +457,7 @@
                         }
                     }, 20);
                 }
-                $("li").click(function(){
-                    var text = $("." + $(this).attr("class")).text();
-                    var carouselNumber = $(this).attr("class");
-                    carouselNumber = carouselNumber.charAt(carouselNumber.length - 2)
-                    if (carouselNumber == 0)
-                    {
-                        $(".currEl1").html("The current element is: " + text);
-                    }
-                });
-                $("li").click(function(){
-                    var text = $("." + $(this).attr("class")).text();
-                    var carouselNumber = $(this).attr("class");
-                    carouselNumber = carouselNumber.charAt(carouselNumber.length - 2);
-                    if (carouselNumber == 1)
-                    {
-                        $(".currEl2").html("The current element is: " + text);
-                    }
-                });
-                $("li").click(function(){
-                    var text = $("." + $(this).attr("class")).text();
-                    var carouselNumber = $(this).attr("class");
-                    carouselNumber = carouselNumber.charAt(carouselNumber.length - 2);
-                    if (carouselNumber == 2)
-                    {
-                        $(".currEl3").html("The current element is: " + text);
-                    }
-                });
-            });
+            }
         </script>
     </body>
 </html>

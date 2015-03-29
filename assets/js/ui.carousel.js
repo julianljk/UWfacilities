@@ -20,6 +20,7 @@ $.widget("ui.carousel", {
 		
 		//Prepare animation parameters and needed variables
 		this.items = $(this.options.items, this.element).css({ position: "absolute", top: 0, left: 0, zIndex: 1 });
+		
 		$.extend(this, {
 			props: this.options.orientation == 'vertical' ? ['height', 'Height', 'top', 'Top'] : ['width', 'Width', 'left', 'Left'],
 			start: Math.PI/2,
@@ -160,7 +161,7 @@ $.extend($.ui.carousel, {
 	defaults: {
 		animate: 0.00000001, //TODO: Setting animate to false also currently blocks animateByMouse
 		animateByMouse: true,
-		distance: -0.42,
+		distance: 0,
 		handle: false,
 		items: '> *',
 		orientation: 'horizontal',

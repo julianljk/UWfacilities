@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
 /* line 6, ../sass/main.scss */
 body {
-  background-color: #FFFEDF;
+  background-color: #EaEaEa;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -57,10 +57,7 @@ body {
   padding: 30px;
 }
 /* line 54, ../sass/main.scss */
-#container .results {
-  border: 4px solid #B70101;
-  border-radius: 10px;
-}
+
 /* line 57, ../sass/main.scss */
 #container .results .items {
   margin: 20px 0px;
@@ -116,15 +113,56 @@ columnA {
 { 
   font-family: "Trebuchet MS";
   font-weight: bold;
-  font-size: 2.0em;
+  font-size: 16px;
   float: left; 
   cursor: pointer; 
   cursor: hand; 
   list-style: none; 
   margin: 0; 
-  padding: 0; 
+  padding: 10; 
   width: 120px; 
-  height: 80px; 
+  height: 80px;
+   
+}
+
+#carousel .cell
+{ 
+  background-color: #00B8E6;
+  padding:20px;
+  color:#222;
+  border-radius: 10px !important;
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 600 !important;
+  border: 2px solid #CCC;
+  border-spacing: 3px;
+
+}
+#carousel1 .cell
+{ 
+  background-color: #E68282;
+  padding:20px;
+  color:#222;
+  border-radius: 10px !important;
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 600 !important;
+  border: 2px solid #CCC;
+  border-spacing: 3px;
+}
+#carousel2 .cell
+{ 
+  background-color: #4DB84D;
+  padding:20px;
+  color:#222;
+  border-radius: 10px !important;
+  font-family: 'Lato', sans-serif !important;
+  font-weight: 600 !important;
+  border: 2px solid #CCC;
+  border-spacing: 3px;
+}
+.title{
+  background-color :#00aadd;
+  color: white;
+  font-family: 'Lato', sans-serif !important;
 }
 .divider
 {
@@ -133,6 +171,18 @@ columnA {
 .h1
 {
   text-align: center;
+}
+#triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 38px solid red;
+  position:absolute;
+  left: 385px;
+  z-index: 1;
+  bottom: 185px;
+
 }
 
 
