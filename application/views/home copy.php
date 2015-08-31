@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="row" ng-if="item.proj_date != ''">
+                                <div class="row">
                                     <div class="col-md-3">
                                         Project Date
                                     </div>
@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <!--div class="row" ng-if="item.findings != ''">
+                                <div class="row" ng-if="item.findings != ''">
                                     <div class="col-md-3">
                                         Notable Findings/Content
                                     </div>
@@ -150,7 +150,7 @@
                                         <p>{{item.future_opp}}</p>
                                     </div>
                                 </div>
-                                <div class="clearfix" ng-if="item.future_opp != ''"></div-->
+                                <div class="clearfix" ng-if="item.future_opp != ''"></div>
                                 <div class="row" ng-if="item.authors != ''">
                                     <div class="col-md-3">
                                         Document Lead Authors/Project Contact
@@ -186,7 +186,8 @@
                                         <p>{{item.org_name}}</p>
                                     </div>
                                 </div>
-                                <!--div class="clearfix" ng-if="item.student_org != ''"></div>
+                                <div class="clearfix" ng-if="item.student_org != ''"></div>
+                                <!-- EVENTUALL HAVE TO GET RID OF THIS-->
                                 <div class="row" ng-if="item.research_centers != ''">
                                     <div class="col-md-3">
                                         Research Centers/ Campus Divisions
@@ -195,7 +196,8 @@
                                         <p>{{item.research_centers}}</p>
                                     </div>
                                 </div>
-                                <div class="clearfix" ng-if="item.research_centers != ''"></div-->
+                                <div class="clearfix" ng-if="item.research_centers != ''"></div>
+                                <!-- END OF EVENTUALLY -->
                                 <div class="row" ng-if="item.num_students != ''">
                                     <div class="col-md-3">
                                         Number of Student Participants
@@ -224,7 +226,7 @@
             //from Departments table
             var FPMlist = <?php echo json_encode($FPM); ?>;
             //from Academic_Depts
-            var AcademicList = <?php echo json_encode($divisions); ?>;
+            var AcademicList = <?php echo json_encode($academics); ?>;
             //from Student_Orgs
             var StudentList = <?php echo json_encode($stud_orgs); ?>;
 
@@ -232,6 +234,23 @@
             var FPMlistInd = makeIndexedArr(FPMlist,"FPM");
             var AcademicListInd = makeIndexedArr(AcademicList,"Academics");
             var StudentListInd = makeIndexedArr(StudentList,"Student");
+
+            for (var i = 0; i < FPMlist.length; i++)
+            {
+                console.log(FPMlist[i]); 
+            }
+
+            // console.log("FPMLIST[0] is " + FPMlist[0].id + " " + FPMlist[0].dept_name);
+            // console.log("FPMLIST[1] is " + FPMlist[1].id + " " + FPMlist[1].dept_name);
+            // console.log("FPMLIST[2] is " + FPMlist[2].id + " " + FPMlist[2].dept_name);
+            // console.log("FPMLIST[3] is " + FPMlist[3].id + " " + FPMlist[3].dept_name);
+            // console.log("FPMLIST[4] is " + FPMlist[4].id + " " + FPMlist[4].dept_name);
+            // console.log("FPMLIST[5] is " + FPMlist[5].id + " " + FPMlist[5].dept_name);
+            // console.log("FPMLIST[6] is " + FPMlist[6].id + " " + FPMlist[6].dept_name);
+            // console.log("FPMLIST[7] is " + FPMlist[7].id + " " + FPMlist[7].dept_name);
+            // console.log("FPMLIST[8] is " + FPMlist[8].id + " " + FPMlist[8].dept_name);
+
+            var arrs;
 
             Array.prototype.clean = function(deleteValue) {
               for (var i = 0; i < this.length; i++) {
@@ -250,6 +269,8 @@
                 switch(mode){
                     case "FPM":
                         for(i; i < array.length; i++){
+
+                    //    console.log("index: " + array[i].id + " values:" + i);
                           ret[array[i].id] = i;
                         }
                         break;
@@ -285,31 +306,44 @@
                 $scope.AcademicList = AcademicList;
                 $scope.StudentList = StudentList;
 
+                //another copy for...?
                 $scope.FPM = FPMlist;
                 $scope.academics = AcademicList;
                 $scope.stud_orgs = StudentList;
 
+                // console.log("FPM.length is: " + $scope.FPM.length);
+
                 //1. called when spinner elements are clicked
                 $scope.setFPMchoice = function(type){
+                    // console.log(type + "in set choice");
+                    // console.log("in setFPMchoice " + type + " " + $scope.FPMchoice);
 
                     for (var i = 0; i < $scope.FPM.length; i++)
                     {
                         console.log($scope.FPM[i]);
                     }
                     //FPMchoice is now a single object that contains members id and dept_name
-                    $scope.FPMchoice = $scope.FPM[type]; 
+                    $scope.FPMchoice = $scope.FPM[type]; //FPMchoice = item selected (?
+                    
                     $scope.updateLists('FPM');
+
+
+                    // console.log("in setFPMchoice " + type + " $scope.FPMchoice.id: " + $scope.FPMchoice.id + " $scope.FPMchoice.dept_name:"+ $scope.FPMchoice.dept_name);
                 };
                 $scope.setACADEMICSchoice = function(type){
                     $scope.academicChoice = $scope.academics[type];
                     $scope.updateLists('academic');
+                    // console.log("in setAcademicsChoice " + type + " " + $scope.academics[type]);
                 };
                 $scope.setORGchoice = function(type){
                     $scope.studentChoice = $scope.stud_orgs[type];
+                   // console.log($scope.Choice + "lolol");
                     $scope.updateLists('student');
+                    // console.log("in setOrgChoice " + type + " " + $scope.stud_orgs[type]);
                 };
 
                 $scope.get = function(ind){
+                    //retrieves /get/1 till 39, stores all the items in $scope.items.
                     $http.get('/get/' + $scope.ids[ind]).success(function(data) { 
                             console.log(data[0]);
                             $scope.items[ind] = data[0];
@@ -339,7 +373,20 @@
                    var randomID = Math.floor(Math.random()*$scope.ids.length);
                    console.log("randomID = " + randomID);
 
+
+                    //supposed to be randomID;
                     $scope.get(0);
+                    
+                    
+                    /*console.log(JSON.stringify({ ids: $scope.ids }));
+                    $http({
+                        method: 'POST',
+                        url: host + '/getAll/',         
+                        data: JSON.stringify({ ids: $scope.ids }),
+                    })
+                    .success(function(data){
+                        console.log(data);
+                    });*/
                 }
 
                 $scope.reset = function(){
@@ -358,12 +405,11 @@
                     $scope.academics = AcademicList;
                     $scope.stud_orgs = StudentList;
                 }
-                //NAIVE RANDOM METHOD, not completely randomized but random enough probably, was built with a limited dataset.
                 $scope.random = function()
-                { 
-                    var randomVariable; 
+                { /* random start*/
+                    var randomVariable; // random obj, FPM, academics or student orgs
                     var currList;
-                    var randomNumber = Math.random(); 
+                    var randomNumber = Math.random(); // ran
                     var currChoice; 
                     var randomElement;
 
@@ -405,10 +451,25 @@
                         $scope.updateLists(currList);
                     }
                     $scope.getOne();
-                    $scope.reset();
-                } 
+                    console.log("in random");
+                    console.log("in get one" + $scope.ids.length);
+                    if($scope.ids.length == 0 || $scope.ids.length == 4 || $scope.ids.length == 2)
+                    {
+                        $scope.reset();
+                        $scope.random();
+                    }
+                    // console.log("items.length = " + $scope.items.length);
+                } /*random end*/
+
+                //2. called everytime a setChoice function is called
+                /*
+                @params changed - indicate which list we're working with
+                */
                 $scope.updateLists = function(changed){
                     //changed = 'FPM', 'academic', 'student'
+                    // console.log("changed = " + changed);
+
+                    //false indicates that the list has been clicked?
                     switch(changed){
                         case "FPM":
                             $scope.editFPM = false;
@@ -424,7 +485,9 @@
                     var f = $scope.FPMchoice ? $scope.FPMchoice.id : 0;
                     var a = $scope.academicChoice ? $scope.academicChoice.id : 0;
                     var s = $scope.studentChoice ? $scope.studentChoice.org_id : 0;
-                    console.log("f =" + f + " a =" + a + "s =" + s);
+
+                    // console.log(f +"hihi");
+                    // console.log("inUpdateLists" +host + '/selects/' + $scope.FPMchoice.id + "/" + $scope.academicChoice.id + "/" + $scope.studentChoice.id);
                     $.ajax({
                         async: false,//apparently this is depreciated so may have to change. need it for now
                         type: 'GET',
@@ -432,7 +495,13 @@
                         success: function(data) { 
                             //returns an array of objects with fields id, dept_id, academic_dept_id, stud_org_id
                             data = JSON.parse(data);
+    
+                            console.log(data[0]);
 
+                            // for (var i = 0; i < data.length; i++)
+                            // {
+                            //     console.log(data[i].dept_id);
+                            // }
                             $scope.FPM = [];
                             $scope.academics = [];
                             $scope.stud_orgs = [];
@@ -447,6 +516,12 @@
                                     $scope.stud_orgs[data[j].stud_org_id] = StudentList[StudentListInd[data[j].stud_org_id]];
                                 $scope.ids[j] = data[j].id;
                             }   
+                            // console.log($scope.ids);
+                            // for (var i = 0; i < $scope.FPM.length; i++)
+                            // {
+                            //     console.log("hi");
+                            //     console.log($scope.FPM[i]);
+                            // }
                             //removes any values that are undefined in the array
                             $scope.FPM.clean(undefined);
                             $scope.academics.clean(undefined);
@@ -476,16 +551,17 @@
                 window.setTimeout(function() {
                     $("#carousel").carousel({
                         orientation: 'vertical',
-                        //TRY CHANGING THE RADIUS AND OBSERVE THE CHANGES ON THE FRONT END. CHANGE ACCORDINGLY
-                        radius: 120
+                        radius: 200
                     });
                 });
+                //You don't need this timeout in your pages - Safari has stupid issues with our demo system
                 window.setTimeout(function() {
                     $("#carousel1").carousel({
                         orientation: 'vertical',
                         radius: 700
                     });
                 });
+                //You don't need this timeout in your pages - Safari has stupid issues with our demo system
                 window.setTimeout(function() {
                     $("#carousel2").carousel({
                         orientation: 'vertical',
@@ -508,7 +584,7 @@
                     var myElement = ".listEle2" + i;  
                     fade(myElement, true);
                 }
-                //affects the fade in fade out effect in the front
+            
                 function fade (currObject, myBoolean)
                 {
                     window.setInterval(function(){

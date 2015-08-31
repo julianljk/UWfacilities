@@ -51,7 +51,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
-
+//UWFACILITIES: setting $autoload['libraries'] to 'database' ensures automatically sets up a connection to the database
 $autoload['libraries'] = array('database');
 
 

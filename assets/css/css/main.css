@@ -182,7 +182,9 @@ columnA {
   left: 385px;
   z-index: 1;
   bottom: 185px;
-
+}
+.randomize{
+  margin-left: 15px;
 }
 
 
